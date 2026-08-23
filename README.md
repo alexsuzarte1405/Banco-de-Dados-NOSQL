@@ -91,10 +91,66 @@ exemplo, "Jefté"), números (por exemplo,
 35), booleanos (por exemplo, true), arrays ([
 ... ]) e outros documentos (também
 chamados de objetos; { ... }).
+
 <img width="257" height="224" alt="image" src="https://github.com/user-attachments/assets/65fb6d46-043b-4996-8222-ecc808862b23" />
 
 # CRUD
 <img width="444" height="230" alt="image" src="https://github.com/user-attachments/assets/37be8ee8-f92b-4a24-9944-d515fc295e58" />
 
 
+# Anotações e Comandos Básico - MongoDB
 
+Guia prático de comandos básicos do MongoDB.
+
+---
+
+## 💻 Comandos Básicos
+
+### 1. Gerenciamento de Bancos e Collections
+
+```javascript
+// Exibir todos os bancos de dados
+show databases
+
+// Selecionar ou criar um banco de dados
+use loja_informatica
+
+// Criar uma nova collection explicitamente
+db.createCollection("cliente")
+
+// Mostrar todas as collections do banco atual
+show collections
+
+
+### Inserção de documentos:
+
+// Inserir apenas 1 documento (objeto)
+db.cliente.insertOne({
+  "nome": "jefté",
+  "idade": 35,
+  "pets": ["dora", "sabrina"],
+  "endereco": {
+    "logradouro": "Sossego"
+  }
+})
+
+// Inserir múltiplos documentos de uma vez
+db.cliente.insertMany([
+  { "nome": "Brenno" },
+  { "nome": "João" },
+  { "nome": "Maria" },
+  { "nome": "José" },
+  { "nome": "Noé" }
+])
+
+
+### Consultar Documentos: 
+
+// Listar todos os documentos da collection
+db.cliente.find()
+
+// Buscar documentos por um campo específico
+db.cliente.find({ "nome": "José" })
+
+// Buscar por identificador único (_id)
+db.cliente.find({ _id: ObjectId('6a7bbab007ff2cf8649f68a9') })
