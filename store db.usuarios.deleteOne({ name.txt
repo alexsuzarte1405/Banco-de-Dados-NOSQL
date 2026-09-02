@@ -1,0 +1,8 @@
+Remoção
+
+
+store> db.usuarios.deleteOne({ name: "Eduarda" })
+{ acknowledged: true, deletedCount: 0 }
+
+store> db.usuarios.findOne({name: "Eduarda"})
+null

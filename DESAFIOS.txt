@@ -1,0 +1,216 @@
+1)Mostrar apenas os nomes dos clientes
+
+store> db.usuarios.find({},{ name: 1, _id: 0 })
+[
+  { name: 'Ana' },
+  { name: 'Bruno' },
+  { name: 'Carlos' },
+  { name: 'Daniela' },
+  { name: 'Alex' },
+  { name: 'Fernando' }
+]
+
+
+2)Contar quantos clientes existem.
+
+store> db.usuarios.countDocuments({})
+6
+
+
+
+3)Contar apenas os clientes ativos.
+
+store> db.usuarios.countDocuments({ active: true })
+4
+
+
+4)Mostrar o cliente com maior pontuação
+
+store> db.usuarios.find().sort({ points: -1 }).limit(1)
+[
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f6'),
+    name: 'Daniela',
+    age: 40,
+    city: 'São Paulo',
+    active: true,
+    points: 500,
+    Vip: true
+  }
+]
+
+
+5)Mostrar o cliente com menor idade.
+ 
+store> db.usuarios.find().sort({ age: 1 }).limit(1)
+[
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f7'),
+    name: 'Alex',
+    age: 22,
+    city: 'Rio de Janeiro',
+    active: false,
+    points: 50
+  }
+]
+
+
+
+6) Mostrar apenas clientes com pontuação entre 100 e 400.
+
+store> db.usuarios.find({ points: { $gte: 100, $lte: 400 } })
+[
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f3'),
+    name: 'Ana',
+    age: 25,
+    city: 'Salvador',
+    active: true,
+    points: 170
+  }
+]
+
+
+7)Mostrar apenas clientes das cidades de Salvador ou São Paulo.
+
+store> db.usuarios.find({ city: { $in: ["Salvador", "São Paulo"] } })
+[
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f3'),
+    name: 'Ana',
+    age: 25,
+    city: 'Salvador',
+    active: true,
+    points: 170
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f5'),
+    name: 'Carlos',
+    age: 28,
+    city: 'Salvador',
+    active: false,
+    points: 80
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f6'),
+    name: 'Daniela',
+    age: 40,
+    city: 'São Paulo',
+    active: true,
+    points: 500,
+    Vip: true
+  }
+]
+
+
+
+
+8) Mostrar todos os clientes ordenados por nome.
+
+store> db.usuarios.find().sort({ name: 1 })
+[
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f7'),
+    name: 'Alex',
+    age: 22,
+    city: 'Rio de Janeiro',
+    active: false,
+    points: 50
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f3'),
+    name: 'Ana',
+    age: 25,
+    city: 'Salvador',
+    active: true,
+    points: 170
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f4'),
+    name: 'Bruno',
+    age: 32,
+    city: 'Feira de Santana',
+    active: true
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f5'),
+    name: 'Carlos',
+    age: 28,
+    city: 'Salvador',
+    active: false,
+    points: 80
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f6'),
+    name: 'Daniela',
+    age: 40,
+    city: 'São Paulo',
+    active: true,
+    points: 500,
+    Vip: true
+  },
+  {
+    _id: ObjectId('6a9789c60867d8559ac5d6f8'),
+    name: 'Fernando',
+    age: 29,
+    city: 'Recife',
+    active: true,
+    points: 90
+  }
+]
+
+
+
+
+9) Mostrar apenas os três primeiros clientes.
+ 
+store>
+[
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f3'),
+    name: 'Ana',
+    age: 25,
+    city: 'Salvador',
+    active: true,
+    points: 170
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f4'),
+    name: 'Bruno',
+    age: 32,
+    city: 'Feira de Santana',
+    active: true
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f5'),
+    name: 'Carlos',
+    age: 28,
+    city: 'Salvador',
+    active: false,
+    points: 80
+  }
+]
+
+
+10) Mostrar apenas os clientes inativos.
+
+store> db.usuarios.find({ active: false })
+[
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f5'),
+    name: 'Carlos',
+    age: 28,
+    city: 'Salvador',
+    active: false,
+    points: 80
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f7'),
+    name: 'Alex',
+    age: 22,
+    city: 'Rio de Janeiro',
+    active: false,
+    points: 50
+  }
+]
+store>

@@ -1,0 +1,26 @@
+Incremento
+
+
+
+store> db.usuarios.updateOne({ name: "Ana" },{ $inc: { points: 50 } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+store> db.usuarios.findOne()
+{
+  _id: ObjectId('6a976c0d0867d8559ac5d6f3'),
+  name: 'Ana',
+  age: 25,
+  city: 'Salvador',
+  active: true,
+  points: 170
+}
+
+store> db.usuarios.findOne({ name: "Ana" },{ name: 1, points: 1, _id: 0 })
+
+{ name: 'Ana', points: 170 }

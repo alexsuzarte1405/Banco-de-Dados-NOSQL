@@ -1,0 +1,54 @@
+Criar um banco chamado store e uma coleção chamada customers.
+
+
+mongosh> use store
+switched to db store
+store> db.createCollection("customers")
+{ ok: 1 }
+Please enter a MongoDB connection string (Default: mongodb://localhost/): store> db.usuarios.insertMany([
+|   {
+|     "name": "Ana",
+|     "age": 25,
+|     "city": "Salvador",
+|     "active": true,
+|     "points": 120
+|   },
+|   {
+|     "name": "Bruno",
+|     "age": 32,
+|     "city": "Feira de Santana",
+|     "active": true,
+|     "points": 300
+|   },
+|   {
+|     "name": "Carlos",
+|     "age": 28,
+|     "city": "Salvador",
+|     "active": false,
+|     "points": 80
+|   },
+|   {
+|     "name": "Daniela",
+|     "age": 40,
+|     "city": "São Paulo",
+|     "active": true,
+|     "points": 500
+|   },
+|   {
+|     "name": "Eduarda",
+|     "age": 22,
+|     "city": "Rio de Janeiro",
+|     "active": false,
+|     "points": 50
+|   }
+| ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6a976c0d0867d8559ac5d6f3'),
+    '1': ObjectId('6a976c0d0867d8559ac5d6f4'),
+    '2': ObjectId('6a976c0d0867d8559ac5d6f5'),
+    '3': ObjectId('6a976c0d0867d8559ac5d6f6'),
+    '4': ObjectId('6a976c0d0867d8559ac5d6f7')
+  }
+}

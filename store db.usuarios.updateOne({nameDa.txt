@@ -1,0 +1,20 @@
+Criar um novo campo
+
+
+store> db.usuarios.updateOne({name:"Daniela"},{$set:{Vip:true}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+store> db.usuarios.findOne({name: "Daniela"})
+{
+  _id: ObjectId('6a976c0d0867d8559ac5d6f6'),
+  name: 'Daniela',
+  age: 40,
+  city: 'São Paulo',
+  active: true,
+  points: 500,
+  Vip: true

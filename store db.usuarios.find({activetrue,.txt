@@ -1,0 +1,5 @@
+Filtro com múltiplas condições
+
+
+store> db.usuarios.find({active:true,age:{$gt: 30}},{ name: 1, _id: 0 })
+[ { name: 'Bruno' }, { name: 'Daniela' } ]

@@ -1,0 +1,46 @@
+Consulta:
+
+
+store> db.usuarios.find()
+[
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f3'),
+    name: 'Ana',
+    age: 25,
+    city: 'Salvador',
+    active: true,
+    points: 120
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f4'),
+    name: 'Bruno',
+    age: 32,
+    city: 'Feira de Santana',
+    active: true,
+    points: 300
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f5'),
+    name: 'Carlos',
+    age: 28,
+    city: 'Salvador',
+    active: false,
+    points: 80
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f6'),
+    name: 'Daniela',
+    age: 40,
+    city: 'São Paulo',
+    active: true,
+    points: 500
+  },
+  {
+    _id: ObjectId('6a976c0d0867d8559ac5d6f7'),
+    name: 'Eduarda',
+    age: 22,
+    city: 'Rio de Janeiro',
+    active: false,
+    points: 50
+  }
+]

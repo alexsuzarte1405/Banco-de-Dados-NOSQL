@@ -1,0 +1,11 @@
+Atualização
+
+
+store> db.usuarios.updateOne({"name": "Eduarda"},{$set:{"name":"Alex"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}

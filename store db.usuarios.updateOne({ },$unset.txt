@@ -1,0 +1,20 @@
+Remover um campo
+
+
+
+store> db.usuarios.updateOne({ name: "Bruno" },{ $unset: { points: "" } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+store> db.usuarios.findOne({name: "Bruno"})
+{
+  _id: ObjectId('6a976c0d0867d8559ac5d6f4'),
+  name: 'Bruno',
+  age: 32,
+  city: 'Feira de Santana',
+  active: true
+}
