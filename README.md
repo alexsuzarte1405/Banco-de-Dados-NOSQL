@@ -451,3 +451,132 @@ Modele a estrutura considerando o comportamento real de uso do sistema: equilibr
 
 
 
+
+
+
+# 🗃️ Modelagem de Dados no MongoDB: Relacionamentos
+
+Este repositório contém anotações práticas e exemplos de modelagem de dados no MongoDB, cobrindo os conceitos de dados **Embarcados (Embedded)** e **Por Referência (References)** para os três principais tipos de relacionamentos.
+
+---
+
+## ⚖️ Regras de Ouro: Como escolher entre Embarcado e Referência?
+
+| Cenário | Escolha Ideal | Motivo |
+| :--- | :---: | :--- |
+| **Alta performance de leitura?** | 🟩 Embarcado | O banco entrega tudo pronto em uma única consulta ao disco. |
+| **Dados fortemente acoplados?** | 🟩 Embarcado | Se um dado não faz sentido existir sem o outro, devem andar juntos. |
+| **Relações que crescem infinitamente?** | 🟦 Referência | Evita estourar o limite máximo de **16 MB** por documento do MongoDB. |
+| **Entidades independentes / Muitos-para-Muitos?** | 🟦 Referência | Evita duplicação massiva de dados e facilita atualizações em um único lugar. |
+
+---
+
+## 1. One-to-One (Um para Um)
+
+### 🟩 Embarcado (Embedded)
+Ideal quando os dados secundários pertencem exclusivamente ao documento principal e são frequentemente consultados juntos.
+
+```javascript
+db.patients.insertOne({
+  name: "Jefté",
+  age: 35,
+  diseaseSummary: {
+    diseases: ["cold", "broken leg"]
+  }
+})
+```
+
+### 🟦 Por Referência (References)
+Ideal quando os documentos são grandes ou as entidades precisam existir de forma independente no sistema.
+
+```javascript
+// Coleção de Pessoas
+db.persons.insertOne({
+  _id: ObjectId("6aa9e2cee9c288ce1241317e"),
+  name: "Jefté",
+  age: 35,
+  salary: 3000
+})
+
+// Coleção de Carros (apontando para o ID do dono)
+db.cars.insertOne({
+  model: "BMW",
+  price: 40000,
+  owner: ObjectId("6aa9e2cee9c288ce1241317e")
+})
+```
+
+---
+
+## 2. One-to-Many (Um para Muitos)
+
+### 🟩 Embarcado (Embedded)
+Excelente para relações onde os dados do lado "muitos" são limitados em tamanho e fortemente vinculados ao documento pai.
+
+```javascript
+db.questionThreads.insertOne({
+  creator: "Jefté",
+  question: "How does that work?",
+  answers: [
+    { text: "Like that." },
+    { text: "Thanks!" }
+  ]
+})
+```
+
+### 🟦 Por Referência (References)
+Utilizado quando a quantidade de documentos do lado "muitos" pode crescer indefinidamente (ex: milhares de cidadãos em uma única cidade).
+
+```javascript
+// Coleção de Cidades
+db.cities.insertOne({
+  _id: ObjectId("5b98d6b44d01c52e1637a99f"),
+  name: "New York City",
+  coordinates: { lat: 21, lng: 55 }
+})
+
+// Coleção de Cidadãos (referenciando a cidade)
+db.citizens.insertMany([
+  { name: "Jefté Goes", cityId: ObjectId("5b98d6b44d01c52e1637a99f") },
+  { name: "Brenno Salvador", cityId: ObjectId("5b98d6b44d01c52e1637a99f") }
+])
+```
+
+---
+
+## 3. Many-to-Many (Muitos para Muitos)
+
+### 🟩 Embarcado (Embedded)
+Usado quando você quer registrar uma "fotografia do momento" em que a relação aconteceu (ex: os produtos comprados dentro de um pedido específico do cliente).
+
+```javascript
+// Criando o cliente
+db.customers.insertOne({
+  name: "Jefté",
+  age: 35
+})
+
+// Incorporando os pedidos diretamente no cliente
+db.customers.updateOne(
+  { name: "Jefté" },
+  { \$set: { orders: [{ title: "A Book", price: 12.99, quantity: 2 }] } }
+)
+```
+
+### 🟦 Por Referência (References)
+A abordagem clássica e mais escalável para muitos-para-muitos, onde ambas as entidades existem e mudam independentemente no sistema.
+
+```javascript
+// Coleção de Autores
+db.authors.insertMany([
+  { _id: ObjectId("5b98d9e44d01c52e1637a9a6"), name: "Jorge Amado", age: 78, address: { street: "Bahia" } },
+  { _id: ObjectId("5b98d9e44d01c52e1637a9a7"), name: "Graciliano Ramos", age: 55, address: { street: "Rio de Janeiro" } }
+])
+
+// Coleção de Livros (vinculando uma lista de IDs de autores)
+db.books.updateOne(
+  { title: "Capitães da Areia" }, 
+  { \$set: { authors: [ObjectId("5b98d9e44d01c52e1637a9a6"), ObjectId("5b98d9e44d01c52e1637a9a7")] } },
+  { upsert: true } 
+)
+```
